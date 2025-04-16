@@ -1,4 +1,4 @@
-class Cart {
+export class Cart {
     cartItems;
     #localStorageKey;
 
@@ -59,10 +59,7 @@ class Cart {
 
         this.saveToStorage();
     }
+    getCartQuantity(){
+        return this.cartItems.reduce((total, cartItem) => total + cartItem.quantity, 0);
+    }
 }
-
-const cart = new Cart('cart-oop');
-const businessCart = new Cart('business-cart-oop');
-
-console.log(cart);
-console.log(businessCart);
