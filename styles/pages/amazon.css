@@ -138,9 +138,6 @@
   align-items: center;
   margin-bottom: 8px;
 
-  /* At first, the "Added to cart" message will
-     be invisible. Use JavaScript to change the
-     opacity and make it visible. */
   opacity: 0;
 }
 
@@ -148,6 +145,13 @@
   height: 20px;
   margin-right: 5px;
 }
+
+.added-to-cart-visible {
+  opacity: 1;
+}
+/* This is a button that will be used to add items to the
+   cart. It has a background color of rgb(255, 153, 0) and
+   white text. */
 
 .add-to-cart-button {
   width: 100%;
