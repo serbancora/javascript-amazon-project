@@ -1,15 +1,17 @@
-const cart = {
-    cartItems: undefined,
+class Cart {
+    cartItems;
+    localStorageKey;
 
-    init() {
-        this.loadFromStorage();
-    },
+    constructor(localStorageKey) {
+        this.localStorageKey = localStorageKey;
+        this.loadFromStorage(this.localStorageKey);
+    }
     loadFromStorage() {
-        this.cartItems = JSON.parse(localStorage.getItem('cart-oop')) || [];
-    },
+        this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey)) || [];
+    }
     saveToStorage() {
-        localStorage.setItem('cart-oop', JSON.stringify(this.cartItems));
-    },
+        localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems));
+    }
     addToCart(productId) {
         //check if the product is already in the cart
         let matchingItem;
@@ -31,7 +33,7 @@ const cart = {
         }
 
         this.saveToStorage();
-    },
+    }
     removeFromCart(productId) {
         const newCart = [];
 
@@ -44,7 +46,7 @@ const cart = {
         this.cartItems = newCart;
 
         this.saveToStorage();
-    },
+    }
     updateDeliveryOption(productId, deliveryOptionId){
         let matchingItem;
         this.cartItems.forEach((cartItem) => {
@@ -57,6 +59,10 @@ const cart = {
 
         this.saveToStorage();
     }
-};
+}
 
-cart.init();
+const cart = new Cart('cart-oop');
+const businessCart = new Cart('business-cart-oop');
+
+console.log(cart);
+console.log(businessCart);
