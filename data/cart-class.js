@@ -12,7 +12,7 @@ export class Cart {
     saveToStorage() {
         localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
     }
-    addToCart(productId) {
+    addToCart(productId, quantity) {
         //check if the product is already in the cart
         let matchingItem;
         this.cartItems.forEach((cartItem) => {
@@ -23,11 +23,11 @@ export class Cart {
 
         //if found, increase quantity; if not, add to cart
         if (matchingItem) {
-            matchingItem.quantity++;
+            matchingItem.quantity += quantity;
         } else {
             this.cartItems.push({
                 productId: productId,
-                quantity: 1,
+                quantity: quantity,
                 deliveryOptionsId: '1'
             });
         }
@@ -47,19 +47,19 @@ export class Cart {
 
         this.saveToStorage();
     }
-    updateDeliveryOption(productId, deliveryOptionId){
+    updateDeliveryOption(productId, deliveryOptionId) {
         let matchingItem;
         this.cartItems.forEach((cartItem) => {
-          if (productId === cartItem.productId) {
-            matchingItem = cartItem;
-          }
+            if (productId === cartItem.productId) {
+                matchingItem = cartItem;
+            }
         });
-      
+
         matchingItem.deliveryOptionId = deliveryOptionId;
 
         this.saveToStorage();
     }
-    getCartQuantity(){
+    getCartQuantity() {
         return this.cartItems.reduce((total, cartItem) => total + cartItem.quantity, 0);
     }
 }

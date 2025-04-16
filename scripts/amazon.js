@@ -1,6 +1,8 @@
 import { cart } from '../data/cart-instance.js';
 import { products } from '../data/products.js';
-import { formatCurrency } from './utils/money.js';
+
+// Load the cart quantity on page load
+updateCartQuantity();
 
 let productsHTML = '';
 
@@ -29,7 +31,7 @@ products.forEach((product) => {
         ${product.getPrice()}
       </div>
 
-      <div class="product-quantity-container">
+      <div class="product-quantity-container js-product-quantity-selector-${product.id}">
         <select>
           <option selected value="1">1</option>
           <option value="2">2</option>
@@ -76,7 +78,19 @@ document.querySelectorAll('.js-add-to-cart')
   .forEach((button) => {
     button.addEventListener('click', () => {
       const productId = button.dataset.productId;
-      cart.addToCart(productId);
+      const quantitySelector = document.querySelector(`.js-product-quantity-selector-${productId} select`);
+      const quantity = Number(quantitySelector.value);
+
+      // check if quantity is valid
+      if (isNaN(quantity) || quantity < 1) {
+        alert('Please select a valid quantity.');
+        return;
+      }
+
+      cart.addToCart(productId,quantity);
       updateCartQuantity();
     });
   });
+
+document.querySelector('.js-cart-quantity')
+  .innerHTML = cart.getCartQuantity();
