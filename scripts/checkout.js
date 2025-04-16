@@ -5,6 +5,3 @@ import '../data/cart-class.js';
 
 renderOrderSummary();
 renderPaymentSummary();
-
-document.querySelector('.js-cart-total-items')
-    .innerHTML = `${cart.getCartQuantity()} items`;

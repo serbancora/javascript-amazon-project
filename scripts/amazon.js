@@ -70,6 +70,11 @@ function updateCartQuantity() {
   // update cart total quantity on the webpage
   const cartQuantity = cart.getCartQuantity();
 
+  // if cart is empty, dont show the cart quantity
+  if(cartQuantity === 0) {
+    return;
+  }
+
   document.querySelector('.js-cart-quantity')
     .innerHTML = cartQuantity
 }

@@ -62,4 +62,14 @@ export class Cart {
     getCartQuantity() {
         return this.cartItems.reduce((total, cartItem) => total + cartItem.quantity, 0);
     }
+
+    updateQuantity(productId, quantity) {
+        this.cartItems.forEach((cartItem) => {
+            if (productId === cartItem.productId) {
+                cartItem.quantity = quantity;
+            }
+        });
+
+        this.saveToStorage();
+    }
 }
