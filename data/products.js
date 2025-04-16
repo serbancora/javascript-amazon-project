@@ -1,6 +1,6 @@
 import { formatCurrency } from "../scripts/utils/money.js";
 
-class Product{
+class Product {
   id;
   image;
   name;
@@ -17,22 +17,44 @@ class Product{
     this.keywords = productDetails.keywords;
   }
 
-  getStarsUrl(){
+  getStarsUrl() {
     return `images/ratings/rating-${this.rating.stars * 10}.png`;
   }
-  getPrice(){
+  getPrice() {
     return `$${formatCurrency(this.priceCents)}`;
+  }
+
+  extraInfoHTML() {
+    return '';
   }
 }
 
-export function getProduct(productId){
+class Clothing extends Product {
+  sizeChartLink;
+
+  constructor(productDetails) {
+    super(productDetails);
+    this.sizeChartLink = productDetails.sizeChartLink;
+  }
+
+  extraInfoHTML(){
+    
+    return`
+      <a href="${this.sizeChartLink}" target="_blank">
+        Size chart
+      </a>
+    `;
+  }
+}
+
+export function getProduct(productId) {
   //finds the matching product using Id
   let matchingProduct;
-    products.forEach((product) => {
-      if (product.id === productId) {
-        matchingProduct = product;
-      }
-    });
+  products.forEach((product) => {
+    if (product.id === productId) {
+      matchingProduct = product;
+    }
+  });
 
   return matchingProduct;
 }
@@ -697,5 +719,11 @@ export const products = [
     ]
   }
 ].map((productDetails) => {
-  return new Product(productDetails);
+  if(productDetails.type === "clothing") {
+    return new Clothing(productDetails);
+  }
+  else{
+    // Default to Product if type is not clothing
+    return new Product(productDetails);
+  }
 });
